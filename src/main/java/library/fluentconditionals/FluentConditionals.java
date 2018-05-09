@@ -1,6 +1,7 @@
 package library.fluentconditionals;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 public class FluentConditionals {
   
@@ -37,5 +38,17 @@ public class FluentConditionals {
   
   public boolean isCondition() {
     return condition;
+  }
+  
+  public void orElseThrow(RuntimeException e) {
+    if (!condition) {
+      throw e;
+    }
+  }
+  
+  public void orElseThrow(Supplier<RuntimeException> supplier) {
+    if (!condition) {
+      throw supplier.get();
+    }
   }
 }

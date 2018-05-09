@@ -1,6 +1,6 @@
 package client.code;
 
-import static library.fluentconditionals.FluentConditionals.when;
+import static library.fluentconditionals.WhenConditionals.when;
 
 //Task 3
 public class IfElseThenReturn {

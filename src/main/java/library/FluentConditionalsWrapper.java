@@ -1,38 +1,42 @@
 package library;
 
-import library.fluentconditionals.FluentConditionals;
+import library.fluentconditionals.BaseConditionals;
 
-import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
-public class FluentConditionalsWrapper {
+public class FluentConditionalsWrapper<T> {
   
-  FluentConditionals fluentConditionals;
+  private BaseConditionals fluentConditionals;
   
-  public FluentConditionalsWrapper(FluentConditionals fluentConditionals) {
-    this.fluentConditionals = fluentConditionals;
+  private T input;
+  
+  public FluentConditionalsWrapper(BaseConditionals baseConditionals,
+                                   T input) {
+    this.fluentConditionals = baseConditionals;
+    this.input = input;
   }
   
-  public int orElseThrow(RuntimeException e) {
-    fluentConditionals.orElseThrow(e);
-    IntSupplier intSupplier = fluentConditionals.getIntSupplier();
-    return intSupplier.getAsInt();
+  public T orElseThrowE(RuntimeException e) {
+    fluentConditionals.orElseThrowE(e);
+    return input;
   }
   
-  public int orElseThrow(Supplier<RuntimeException> supplier) {
-    fluentConditionals.orElseThrow(supplier);
-    
-    IntSupplier intSupplier = fluentConditionals.getIntSupplier();
-    return intSupplier.getAsInt();
+  public T orElseThrowE(Supplier<RuntimeException> supplier) {
+    fluentConditionals.orElseThrowE(supplier);
+    return this.input;
   }
   
-  public int orElse(IntSupplier intSupplier) {
-    int result = fluentConditionals.orElse(intSupplier);
-    return result;
+  public T orElse(Supplier<T> supplierInput) {
+    if (fluentConditionals.isCondition()) {
+      return input;
+    }
+    return supplierInput.get();
   }
   
-  public int orElse(int input) {
-    int result = fluentConditionals.orElse(input);
-    return result;
+  public T orElse(T input) {
+    if (fluentConditionals.isCondition()) {
+      return this.input;
+    }
+    return input;
   }
 }

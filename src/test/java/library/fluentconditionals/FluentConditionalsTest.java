@@ -1,10 +1,10 @@
 package library.fluentconditionals;
 
-import client.code.TestHelper;
+import client.code.SomeClass;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 
-import static library.fluentconditionals.FluentConditionals.when;
+import static library.fluentconditionals.WhenConditionals.when;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
@@ -19,8 +19,8 @@ public class FluentConditionalsTest {
   
   @Test
   public void when_true_thenTrue() {
-    
-    FluentConditionals result = FluentConditionals.when(true);
+  
+    BaseConditionals result = when(true);
     
     assertTrue(result.isCondition());
   }
@@ -28,7 +28,7 @@ public class FluentConditionalsTest {
   @Test
   public void when_methodReference_sthFalse_thenFalse() {
   
-    FluentConditionals result = FluentConditionals.when(() -> sthFalse());
+    BaseConditionals result = when(() -> sthFalse());
     
     assertFalse(result.isCondition());
   }
@@ -36,7 +36,7 @@ public class FluentConditionalsTest {
   @Test
   public void when_methodReference_sthTrue_thenTrue() {
   
-    FluentConditionals result = FluentConditionals.when(() -> sthTrue());
+    BaseConditionals result = when(() -> sthTrue());
     
     assertTrue(result.isCondition());
   }
@@ -46,8 +46,8 @@ public class FluentConditionalsTest {
     
     runnable = mock(Runnable.class);
     elseRunnable = mock(Runnable.class);
-    
-    FluentConditionals.when(true)
+  
+    when(true)
         .then(runnable)
         .then(runnable)
         .orElse(elseRunnable);
@@ -61,8 +61,8 @@ public class FluentConditionalsTest {
     
     runnable = mock(Runnable.class);
     elseRunnable = mock(Runnable.class);
-    
-    FluentConditionals.when(false)
+  
+    when(false)
         .then(runnable)
         .then(runnable)
         .orElse(elseRunnable);
@@ -70,23 +70,23 @@ public class FluentConditionalsTest {
     verify(runnable, times(0)).run();
     verify(elseRunnable, times(1)).run();
   
-    Runnable doNothing = FluentConditionals.doNothing;
-  
+    Runnable doNothing = BaseConditionals.doNothing;
+    
     assertNotNull(doNothing);
   }
   
   @Test
   public void check_doNothing_() {
     runnable = mock(Runnable.class);
-    
-    FluentConditionals.when(true)
+  
+    when(true)
         .then(runnable)
         .then(runnable)
         .orElse(elseRunnable);
     
     verify(runnable, times(2)).run();
-    
-    Runnable doNothing = FluentConditionals.doNothing;
+  
+    Runnable doNothing = BaseConditionals.doNothing;
     
     assertNotNull(doNothing);
   }
@@ -94,11 +94,11 @@ public class FluentConditionalsTest {
   @Test(expectedExceptions = RuntimeException.class)
   public void orElseThrow_boolean() {
     runnable = mock(Runnable.class);
-    
-    FluentConditionals.when(false)
+  
+    when(false)
         .then(runnable)
         .then(runnable)
-        .orElseThrow(new RuntimeException());
+        .orElseThrowE(new RuntimeException());
     
     verify(runnable, times(2)).run();
   }
@@ -107,10 +107,10 @@ public class FluentConditionalsTest {
   public void orElseThrow_methodReference() {
     runnable = mock(Runnable.class);
   
-    FluentConditionals.when(() -> sthFalse())
+    when(() -> sthFalse())
         .then(runnable)
         .then(runnable)
-        .orElseThrow(new RuntimeException());
+        .orElseThrowE(new RuntimeException());
     
     verify(runnable, times(2)).run();
   }
@@ -119,10 +119,10 @@ public class FluentConditionalsTest {
   public void orElseThrow_methodReferenceForFalse_methodReferenceForException() {
     runnable = mock(Runnable.class);
   
-    FluentConditionals.when(() -> sthFalse())
+    when(() -> sthFalse())
         .then(runnable)
         .then(runnable)
-        .orElseThrow(RuntimeException::new);
+        .orElseThrowE(RuntimeException::new);
     
     verify(runnable, times(2)).run();
   }
@@ -131,10 +131,10 @@ public class FluentConditionalsTest {
   public void orElseThrow_methodReferenceForTrue_newException() {
     runnable = mock(Runnable.class);
   
-    FluentConditionals.when(() -> sthTrue())
+    when(() -> sthTrue())
         .then(runnable)
         .then(runnable)
-        .orElseThrow(new RuntimeException());
+        .orElseThrowE(new RuntimeException());
     
     verify(runnable, times(2)).run();
   }
@@ -142,12 +142,11 @@ public class FluentConditionalsTest {
   @Test
   public void orElseThrow_methodReferenceForTrue_methodReferenceForException() {
     runnable = mock(Runnable.class);
-    elseRunnable = mock(Runnable.class);
   
-    FluentConditionals.when(() -> sthTrue())
+    when(() -> sthTrue())
         .then(runnable)
         .then(runnable)
-        .orElseThrow(RuntimeException::new);
+        .orElseThrowE(RuntimeException::new);
     
     verify(runnable, times(2)).run();
   }
@@ -208,7 +207,7 @@ public class FluentConditionalsTest {
     
     int result3 = when(() -> sthTrue())
         .thenReturn(() -> getLowNumber())
-        .orElseThrow(new RuntimeException());
+        .orElseThrowE(new RuntimeException());
     
     assertEquals(result3, getLowNumber());
   }
@@ -218,9 +217,47 @@ public class FluentConditionalsTest {
     
     int result4 = when(() -> sthFalse())
         .thenReturn(() -> getLowNumber())
-        .orElseThrow(RuntimeException::new);
+        .orElseThrowE(RuntimeException::new);
     
     assertEquals(result4, getLowNumber());
+  }
+  
+  @Test
+  public void whenTrue_forString_addedGenericHandling_() {
+    String string =
+        when(() -> sthTrue())
+            .thenReturn(getYay())
+            .orElse(getNah());
+    
+    assertEquals(string, getYay());
+  }
+  
+  @Test
+  public void whenFalse_forString_addedGenericHandling_() {
+    String string =
+        when(() -> sthFalse())
+            .thenReturn(getYay())
+            .orElse(getNah());
+    
+    assertEquals(string, getNah());
+  }
+  
+  @Test
+  public void whenTrue_thenReturnSomeClass() {
+    SomeClass customObject =
+        when(() -> sthTrue())
+            .thenReturn(new SomeClass())
+            .orElse(SomeClass::new);
+    
+    assertTrue(customObject instanceof SomeClass);
+  }
+  
+  @Test(expectedExceptions = RuntimeException.class)
+  public void whenFalse_thenRuntimeException() {
+    SomeClass customObject2 =
+        when(() -> sthFalse())
+            .thenReturn(SomeClass::new)
+            .orElseThrowE(RuntimeException::new);
   }
   
   private static int getLowNumber() {
@@ -237,6 +274,14 @@ public class FluentConditionalsTest {
   
   private static boolean sthFalse() {
     return false;
+  }
+  
+  private String getYay() {
+    return "Yay";
+  }
+  
+  private String getNah() {
+    return "Nah";
   }
   
 }

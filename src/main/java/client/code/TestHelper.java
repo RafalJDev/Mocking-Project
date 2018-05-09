@@ -46,20 +46,3 @@ public class TestHelper {
   }
 }
 
-class SomeClass {
-  String getMessageForHighNumber() {
-    return "I'm so high";
-  }
-  
-  String getMessageForLowNumber() {
-    return "I'm so low";
-  }
-}
-
-class AnotherClass {
-  final String message;
-  
-  AnotherClass(String message) {
-    this.message = message;
-  }
-}

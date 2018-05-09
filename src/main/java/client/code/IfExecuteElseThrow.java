@@ -1,6 +1,6 @@
 package client.code;
 
-import static library.fluentconditionals.FluentConditionals.when;
+import static library.fluentconditionals.WhenConditionals.when;
 
 //Task 2
 public class IfExecuteElseThrow {
@@ -9,22 +9,22 @@ public class IfExecuteElseThrow {
     
     when(TestHelper::somethingIsTrue)
         .then(TestHelper::printBar)
-        .orElseThrow(new RuntimeException());
+        .orElseThrowE(new RuntimeException());
     //'Bar' printed to console
     
     when(TestHelper::somethingIsTrue)
         .then(TestHelper::printBar)
-        .orElseThrow(RuntimeException::new);
+        .orElseThrowE(RuntimeException::new);
     //'Bar' printed to console
     
     when(TestHelper::somethingIsTrue)
         .then(TestHelper::printBar)
-        .orElseThrow(TestHelper::createException);
+        .orElseThrowE(TestHelper::createException);
     //'Bar' printed to console
     
     when(!TestHelper.somethingIsTrue())
         .then(TestHelper::printFoo)
-        .orElseThrow(TestHelper::createException);
+        .orElseThrowE(TestHelper::createException);
     //exception thrown
   }
 }

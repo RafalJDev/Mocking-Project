@@ -4,8 +4,7 @@ import client.code.TestHelper;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 
-import static library.fluentconditionals.FluentConditionals.doNothing;
-import static org.mockito.BDDMockito.then;
+import static library.fluentconditionals.FluentConditionals.when;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
@@ -159,11 +158,71 @@ public class FluentConditionalsTest {
     verify(runnable, times(2)).run();
   }
   
-  public static boolean sthTrue() {
+  public void orElse_intReturn_whenTrue_methodReferenceAsParameter_() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(FluentConditionalsTest::sthTrue)
+        .thenReturn(FluentConditionalsTest::getHighNumber)
+        .orElse(FluentConditionalsTest::getLowNumber);
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 1000);
+  }
+  
+  public void orElse_intReturn_whenFalse_methodReferenceAsParameter() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(FluentConditionalsTest::sthFalse)
+        .thenReturn(FluentConditionalsTest::getHighNumber)
+        .orElse(FluentConditionalsTest::getLowNumber);
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 123);
+  }
+  
+  public void orElse_intReturn_whenTrue_valueAsParameter() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(FluentConditionalsTest::sthTrue)
+        .thenReturn(FluentConditionalsTest::getHighNumber)
+        .orElse(345);
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 1000);
+  }
+  
+  public void orElse_intReturn_whenFalse_valueAsParameter() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(FluentConditionalsTest::sthFalse)
+        .thenReturn(FluentConditionalsTest::getHighNumber)
+        .orElse(345);
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 345);
+  }
+  
+  private static int getLowNumber() {
+    return 123;
+  }
+  
+  private static int getHighNumber() {
+    return 1000;
+  }
+  
+  private static boolean sthTrue() {
     return true;
   }
   
-  public static boolean sthFalse() {
+  private static boolean sthFalse() {
     return false;
   }
   

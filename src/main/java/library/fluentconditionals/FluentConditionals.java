@@ -1,12 +1,15 @@
 package library.fluentconditionals;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 public class FluentConditionals {
   
   public static Runnable doNothing = () -> {
   };
+  
+  public IntSupplier intSupplier;
   
   private boolean condition;
   
@@ -19,7 +22,6 @@ public class FluentConditionals {
   }
   
   public static FluentConditionals when(BooleanSupplier runnable) {
-    
     return new FluentConditionals(runnable.getAsBoolean());
   }
   
@@ -36,8 +38,18 @@ public class FluentConditionals {
     }
   }
   
-  public boolean isCondition() {
-    return condition;
+  public int orElse(IntSupplier intSupplier) {
+    if (!condition) {
+      return intSupplier.getAsInt();
+    }
+    return this.intSupplier.getAsInt();
+  }
+  
+  public int orElse(int input) {
+    if (!condition) {
+      return input;
+    }
+    return intSupplier.getAsInt();
   }
   
   public void orElseThrow(RuntimeException e) {
@@ -50,5 +62,14 @@ public class FluentConditionals {
     if (!condition) {
       throw supplier.get();
     }
+  }
+  
+  public FluentConditionals thenReturn(IntSupplier intSupplier) {
+    this.intSupplier = intSupplier;
+    return this;
+  }
+  
+  public boolean isCondition() {
+    return condition;
   }
 }

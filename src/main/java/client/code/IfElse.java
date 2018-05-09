@@ -1,6 +1,7 @@
 package client.code;
 
-import static library.fluentconditionals.FluentConditionals.*;
+import static library.fluentconditionals.FluentConditionals.doNothing;
+import static library.fluentconditionals.FluentConditionals.when;
 
 //Task 1
 public class IfElse {

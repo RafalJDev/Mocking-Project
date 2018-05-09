@@ -1,6 +1,6 @@
 package client.code;
 
-import static library.fluentconditionals.FluentConditionals.*;
+import static library.fluentconditionals.FluentConditionals.when;
 
 //Task 2
 public class IfExecuteElseThrow {

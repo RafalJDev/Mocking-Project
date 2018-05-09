@@ -28,16 +28,16 @@ public class FluentConditionalsTest {
   
   @Test
   public void when_methodReference_sthFalse_thenFalse() {
-    
-    FluentConditionals result = FluentConditionals.when(FluentConditionalsTest::sthFalse);
+  
+    FluentConditionals result = FluentConditionals.when(() -> sthFalse());
     
     assertFalse(result.isCondition());
   }
   
   @Test
   public void when_methodReference_sthTrue_thenTrue() {
-    
-    FluentConditionals result = FluentConditionals.when(FluentConditionalsTest::sthTrue);
+  
+    FluentConditionals result = FluentConditionals.when(() -> sthTrue());
     
     assertTrue(result.isCondition());
   }
@@ -79,7 +79,6 @@ public class FluentConditionalsTest {
   @Test
   public void check_doNothing_() {
     runnable = mock(Runnable.class);
-    elseRunnable = mock(Runnable.class);
     
     FluentConditionals.when(true)
         .then(runnable)
@@ -96,7 +95,6 @@ public class FluentConditionalsTest {
   @Test(expectedExceptions = RuntimeException.class)
   public void orElseThrow_boolean() {
     runnable = mock(Runnable.class);
-    elseRunnable = mock(Runnable.class);
     
     FluentConditionals.when(false)
         .then(runnable)
@@ -109,9 +107,8 @@ public class FluentConditionalsTest {
   @Test(expectedExceptions = RuntimeException.class)
   public void orElseThrow_methodReference() {
     runnable = mock(Runnable.class);
-    elseRunnable = mock(Runnable.class);
-    
-    FluentConditionals.when(FluentConditionalsTest::sthFalse)
+  
+    FluentConditionals.when(() -> sthFalse())
         .then(runnable)
         .then(runnable)
         .orElseThrow(new RuntimeException());
@@ -122,9 +119,8 @@ public class FluentConditionalsTest {
   @Test(expectedExceptions = RuntimeException.class)
   public void orElseThrow_methodReferenceForFalse_methodReferenceForException() {
     runnable = mock(Runnable.class);
-    elseRunnable = mock(Runnable.class);
-    
-    FluentConditionals.when(FluentConditionalsTest::sthFalse)
+  
+    FluentConditionals.when(() -> sthFalse())
         .then(runnable)
         .then(runnable)
         .orElseThrow(RuntimeException::new);
@@ -135,9 +131,8 @@ public class FluentConditionalsTest {
   @Test
   public void orElseThrow_methodReferenceForTrue_newException() {
     runnable = mock(Runnable.class);
-    elseRunnable = mock(Runnable.class);
-    
-    FluentConditionals.when(FluentConditionalsTest::sthTrue)
+  
+    FluentConditionals.when(() -> sthTrue())
         .then(runnable)
         .then(runnable)
         .orElseThrow(new RuntimeException());
@@ -149,8 +144,8 @@ public class FluentConditionalsTest {
   public void orElseThrow_methodReferenceForTrue_methodReferenceForException() {
     runnable = mock(Runnable.class);
     elseRunnable = mock(Runnable.class);
-    
-    FluentConditionals.when(FluentConditionalsTest::sthTrue)
+  
+    FluentConditionals.when(() -> sthTrue())
         .then(runnable)
         .then(runnable)
         .orElseThrow(RuntimeException::new);
@@ -161,10 +156,10 @@ public class FluentConditionalsTest {
   public void orElse_intReturn_whenTrue_methodReferenceAsParameter_() {
     
     runnable = mock(Runnable.class);
-    
-    int result1 = when(FluentConditionalsTest::sthTrue)
-        .thenReturn(FluentConditionalsTest::getHighNumber)
-        .orElse(FluentConditionalsTest::getLowNumber);
+  
+    int result1 = when(() -> sthTrue())
+        .thenReturn(() -> getHighNumber())
+        .orElse(() -> getLowNumber());
     
     verify(runnable, times(0)).run();
     
@@ -174,10 +169,10 @@ public class FluentConditionalsTest {
   public void orElse_intReturn_whenFalse_methodReferenceAsParameter() {
     
     runnable = mock(Runnable.class);
-    
-    int result1 = when(FluentConditionalsTest::sthFalse)
-        .thenReturn(FluentConditionalsTest::getHighNumber)
-        .orElse(FluentConditionalsTest::getLowNumber);
+  
+    int result1 = when(() -> sthFalse())
+        .thenReturn(() -> getHighNumber())
+        .orElse(() -> getLowNumber());
     
     verify(runnable, times(0)).run();
     
@@ -187,9 +182,9 @@ public class FluentConditionalsTest {
   public void orElse_intReturn_whenTrue_valueAsParameter() {
     
     runnable = mock(Runnable.class);
-    
-    int result1 = when(FluentConditionalsTest::sthTrue)
-        .thenReturn(FluentConditionalsTest::getHighNumber)
+  
+    int result1 = when(() -> sthTrue())
+        .thenReturn(() -> getHighNumber())
         .orElse(345);
     
     verify(runnable, times(0)).run();
@@ -200,9 +195,9 @@ public class FluentConditionalsTest {
   public void orElse_intReturn_whenFalse_valueAsParameter() {
     
     runnable = mock(Runnable.class);
-    
-    int result1 = when(FluentConditionalsTest::sthFalse)
-        .thenReturn(FluentConditionalsTest::getHighNumber)
+  
+    int result1 = when(() -> sthFalse())
+        .thenReturn(() -> getHighNumber())
         .orElse(345);
     
     verify(runnable, times(0)).run();

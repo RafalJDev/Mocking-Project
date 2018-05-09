@@ -1,5 +1,7 @@
 package library.fluentconditionals;
 
+import library.FluentConditionalsWrapper;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
@@ -9,11 +11,11 @@ public class FluentConditionals {
   public static Runnable doNothing = () -> {
   };
   
-  public IntSupplier intSupplier;
+  private IntSupplier intSupplier;
   
   private boolean condition;
   
-  private FluentConditionals(boolean condition) {
+  protected FluentConditionals(boolean condition) {
     this.condition = condition;
   }
   
@@ -64,12 +66,17 @@ public class FluentConditionals {
     }
   }
   
-  public FluentConditionals thenReturn(IntSupplier intSupplier) {
+  public FluentConditionalsWrapper thenReturn(IntSupplier intSupplier) {
     this.intSupplier = intSupplier;
-    return this;
+    
+    return new FluentConditionalsWrapper(this);
   }
   
   public boolean isCondition() {
     return condition;
+  }
+  
+  public IntSupplier getIntSupplier() {
+    return intSupplier;
   }
 }

@@ -17,7 +17,6 @@ public class FluentConditionalsTest {
   @Mock
   Runnable elseRunnable;
   
-  
   @Test
   public void when_true_thenTrue() {
     
@@ -203,6 +202,25 @@ public class FluentConditionalsTest {
     verify(runnable, times(0)).run();
     
     assertEquals(result1, 345);
+  }
+  
+  public void orElseThrow_whenTrue_thenReturnedLowNumber() {
+    
+    int result3 = when(() -> sthTrue())
+        .thenReturn(() -> getLowNumber())
+        .orElseThrow(new RuntimeException());
+    
+    assertEquals(result3, getLowNumber());
+  }
+  
+  @Test(expectedExceptions = RuntimeException.class)
+  public void orElseThrow_whenFalse_thenException() {
+    
+    int result4 = when(() -> sthFalse())
+        .thenReturn(() -> getLowNumber())
+        .orElseThrow(RuntimeException::new);
+    
+    assertEquals(result4, getLowNumber());
   }
   
   private static int getLowNumber() {

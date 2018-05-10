@@ -1,6 +1,5 @@
 package library.conditionals;
 
-import client.code.SomeClass;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 
@@ -291,4 +290,21 @@ public class WhenConditionalsTest {
     return "Nah";
   }
   
+  private class AnotherClass {
+    final String message;
+    
+    AnotherClass(String message) {
+      this.message = message;
+    }
+  }
+  
+  private class SomeClass {
+    String getMessageForHighNumber() {
+      return "I'm so high";
+    }
+    
+    String getMessageForLowNumber() {
+      return "I'm so low";
+    }
+  }
 }

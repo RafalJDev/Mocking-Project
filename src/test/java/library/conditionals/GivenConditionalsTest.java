@@ -2,6 +2,8 @@ package library.conditionals;
 
 import org.testng.annotations.Test;
 
+import java.util.function.Supplier;
+
 import static library.conditionals.GivenConditionals.doNothing;
 import static library.conditionals.GivenConditionals.given;
 import static org.testng.Assert.*;
@@ -163,6 +165,35 @@ public class GivenConditionalsTest {
     assertEquals(result5, getGreetings().length());
   }
   
+  public void givenSomeClass_whenTrue_thenMessageLowNumber() {
+    String message = given(SomeClass::new)
+        .when(() -> sthTrue())
+        .thenReturn(someClass -> getMessageForLowNumber())
+        .orElse(() -> getMessageForHighNumber());
+    
+    assertEquals(message, getMessageForLowNumber());
+  }
+  
+  public void givenSomeClass_whenFalse_thenMessageHighNumber() {
+    String message = given(SomeClass::new)
+        .when(() -> sthFalse())
+        .thenReturn(someClass -> getMessageForLowNumber())
+        .orElse(() -> getMessageForHighNumber());
+    
+    assertEquals(message, getMessageForHighNumber());
+  }
+  
+  public void givenSomeClass_whenTrue_thenHighMessage() {
+    Supplier<SomeClass> aNew = SomeClass::new;
+    
+    AnotherClass object = given(aNew)
+        .when(() -> sthTrue())
+        .thenReturn(someClass -> extractMessageForHighNumber(someClass))
+        .orElse(someClass -> extractMessageForLowNumber(someClass));
+    
+    assertEquals(object.message, getMessageForHighNumber());
+  }
+  
   private int getHashCodeFunction(String s) {
     return s.hashCode();
   }
@@ -210,4 +241,39 @@ public class GivenConditionalsTest {
   private static boolean sthFalse() {
     return false;
   }
+  
+  private String getMessageForHighNumber() {
+    return "I'm so high";
+  }
+  
+  private String getMessageForLowNumber() {
+    return "I'm so low";
+  }
+  
+  private AnotherClass extractMessageForHighNumber(SomeClass someClass) {
+    return new AnotherClass(someClass.getMessageForHighNumber());
+  }
+  
+  private AnotherClass extractMessageForLowNumber(SomeClass someClass) {
+    return new AnotherClass(someClass.getMessageForLowNumber());
+  }
+  
+  private class AnotherClass {
+    final String message;
+    
+    AnotherClass(String message) {
+      this.message = message;
+    }
+  }
+  
+  private class SomeClass {
+    String getMessageForHighNumber() {
+      return "I'm so high";
+    }
+    
+    String getMessageForLowNumber() {
+      return "I'm so low";
+    }
+  }
 }
+

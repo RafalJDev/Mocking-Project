@@ -1,6 +1,6 @@
 package client.code;
 
-public class SomeClass {
+class SomeClass {
   String getMessageForHighNumber() {
     return "I'm so high";
   }

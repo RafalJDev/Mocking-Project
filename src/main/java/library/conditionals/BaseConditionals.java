@@ -1,7 +1,5 @@
 package library.conditionals;
 
-import library.conditionals.elseCondition.ElseConditionals;
-
 import java.util.function.Supplier;
 
 public class BaseConditionals {

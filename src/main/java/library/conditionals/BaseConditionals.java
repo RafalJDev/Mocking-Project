@@ -55,18 +55,9 @@ public class BaseConditionals {
     }
     return this;
   }
-
-//  public <T> ElseConditionals<T> thenReturn(Supplier<T> supplier) {
-//    return new ElseConditionals<>(this, supplier.get());
-//  }
-
-//  public <T> ElseConditionals<T> thenReturn(T input) {
-//    return new ElseConditionals(this, input);
-//  }
   
   public boolean isCondition() {
     return condition;
   }
-  
   
 }

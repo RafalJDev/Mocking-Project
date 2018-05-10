@@ -1,12 +1,11 @@
 package library.conditionals.elseCondition;
 
-import library.conditionals.BaseConditionals;
 import library.conditionals.GivenConditionals;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ElseFunctionConditionals<T, R> /*extends ElseConditionals*/ {
+public class ElseFunctionConditionals<T, R> {
   
   private GivenConditionals<T> givenConditionals;
   
@@ -16,18 +15,10 @@ public class ElseFunctionConditionals<T, R> /*extends ElseConditionals*/ {
   
   public ElseFunctionConditionals(GivenConditionals<T> givenConditionals,
                                   Function<T, R> function) {
-//    super(givenConditionals, null);
     this.givenConditionals = givenConditionals;
     this.thenFunction = function;
     this.input = givenConditionals.getInput();
   }
-
-//  public ElseFunctionConditionals(GivenConditionals<T> givenConditionals,
-//                                  T input) {
-////    super(givenConditionals, null);
-//    this.givenConditionals = givenConditionals;
-//    this.input = input;
-//  }
   
   public R orElse(Function<T, R> function) {
     if (givenConditionals.isCondition()) {

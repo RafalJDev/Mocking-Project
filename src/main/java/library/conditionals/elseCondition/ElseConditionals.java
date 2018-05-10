@@ -2,7 +2,6 @@ package library.conditionals.elseCondition;
 
 import library.conditionals.BaseConditionals;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ElseConditionals<T> {

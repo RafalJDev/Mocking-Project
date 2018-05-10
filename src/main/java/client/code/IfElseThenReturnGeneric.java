@@ -2,7 +2,7 @@ package client.code;
 
 import java.util.function.Consumer;
 
-import static library.fluentconditionals.WhenConditionals.when;
+import static library.conditionals.WhenConditionals.when;
 
 //Task 5
 public class IfElseThenReturnGeneric {

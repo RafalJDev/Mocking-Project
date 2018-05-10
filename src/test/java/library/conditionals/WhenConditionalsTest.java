@@ -1,15 +1,15 @@
-package library.fluentconditionals;
+package library.conditionals;
 
 import client.code.SomeClass;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 
-import static library.fluentconditionals.WhenConditionals.when;
+import static library.conditionals.WhenConditionals.when;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
 @Test
-public class FluentConditionalsTest {
+public class WhenConditionalsTest {
   
   @Mock
   Runnable runnable;
@@ -213,9 +213,16 @@ public class FluentConditionalsTest {
   }
   
   @Test(expectedExceptions = RuntimeException.class)
-  public void orElseThrow_whenFalse_thenException() {
-    
+  public void orElseThrow_whenFalse_thenExceptionAsMethodReference() {
+  
     int result4 = when(() -> sthFalse())
+        .thenReturn(() -> getLowNumber())
+        .orElseThrowE(RuntimeException::new);
+  }
+  
+  public void orElseThrow_whenTrue_thenExceptionAsMethodReference() {
+    
+    int result4 = when(() -> sthTrue())
         .thenReturn(() -> getLowNumber())
         .orElseThrowE(RuntimeException::new);
     

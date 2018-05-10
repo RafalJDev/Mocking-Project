@@ -1,6 +1,6 @@
-package library.fluentconditionals;
+package library.conditionals;
 
-import library.FluentConditionalsWrapper;
+import library.conditionals.elseCondition.ElseConditionals;
 
 import java.util.function.Supplier;
 
@@ -9,19 +9,11 @@ public class BaseConditionals {
   public static Runnable doNothing = () -> {
   };
   
-  boolean condition;
+  protected boolean condition;
   
   protected BaseConditionals(boolean condition) {
     this.condition = condition;
   }
-
-//  public static BaseConditionals when(boolean b) {
-//    return new BaseConditionals(b);
-//  }
-//
-//  public static BaseConditionals when(BooleanSupplier runnable) {
-//    return new BaseConditionals(runnable.getAsBoolean());
-//  }
   
   public BaseConditionals then(Runnable runnable) {
     if (condition) {
@@ -29,6 +21,7 @@ public class BaseConditionals {
     }
     return this;
   }
+  
   
   public BaseConditionals orElse(Runnable runnable) {
     if (!condition) {
@@ -50,14 +43,14 @@ public class BaseConditionals {
     }
     return this;
   }
-  
-  public <T> FluentConditionalsWrapper<T> thenReturn(Supplier<T> supplier) {
-    return new FluentConditionalsWrapper<>(this, supplier.get());
-  }
-  
-  public <T> FluentConditionalsWrapper<T> thenReturn(T input) {
-    return new FluentConditionalsWrapper<>(this, input);
-  }
+
+//  public <T> ElseConditionals<T> thenReturn(Supplier<T> supplier) {
+//    return new ElseConditionals<>(this, supplier.get());
+//  }
+
+//  public <T> ElseConditionals<T> thenReturn(T input) {
+//    return new ElseConditionals(this, input);
+//  }
   
   public boolean isCondition() {
     return condition;

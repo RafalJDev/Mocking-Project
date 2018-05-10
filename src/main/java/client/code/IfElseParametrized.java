@@ -1,6 +1,7 @@
 package client.code;
 
-import static library.fluentconditionals.GivenConditionals.*;
+import static library.conditionals.GivenConditionals.doNothing;
+import static library.conditionals.GivenConditionals.given;
 
 //Task 6
 public class IfElseParametrized {

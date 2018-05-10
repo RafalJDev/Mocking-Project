@@ -1,7 +1,7 @@
 package client.code;
 
-import static library.fluentconditionals.WhenConditionals.doNothing;
-import static library.fluentconditionals.WhenConditionals.when;
+import static library.conditionals.WhenConditionals.doNothing;
+import static library.conditionals.WhenConditionals.when;
 
 //Task 1
 public class IfElse {

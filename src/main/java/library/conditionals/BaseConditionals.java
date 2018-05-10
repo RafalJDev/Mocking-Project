@@ -1,5 +1,6 @@
 package library.conditionals;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class BaseConditionals {
@@ -20,7 +21,6 @@ public class BaseConditionals {
     return this;
   }
   
-  
   public BaseConditionals orElse(Runnable runnable) {
     if (!condition) {
       runnable.run();
@@ -38,6 +38,20 @@ public class BaseConditionals {
   public BaseConditionals orElseThrowE(Supplier<RuntimeException> supplier) {
     if (!condition) {
       throw supplier.get();
+    }
+    return this;
+  }
+  
+  public <Ex extends Throwable> BaseConditionals orElseThrow(Supplier<Ex> supplier) throws Ex {
+    if (!condition) {
+      throw supplier.get();
+    }
+    return this;
+  }
+  
+  public <Ex extends Throwable> BaseConditionals orElseThrow(Function<String, Ex> function, String message) throws Ex {
+    if (!condition) {
+      throw function.apply(message);
     }
     return this;
   }

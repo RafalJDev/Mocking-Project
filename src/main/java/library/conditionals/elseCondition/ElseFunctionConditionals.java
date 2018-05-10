@@ -59,12 +59,18 @@ public class ElseFunctionConditionals<T, R> /*extends ElseConditionals*/ {
     return thenFunction.apply(input);
   }
   
-  public R orElseThrow(Supplier<RuntimeException> supplier) {
+  public R orElseThrow(Supplier<RuntimeException> supplier) throws RuntimeException {
     if (!givenConditionals.isCondition()) {
       throw supplier.get();
     }
     return thenFunction.apply(input);
   }
   
+  public <Ex extends Throwable> R orElseThrow(Function<String, Ex> function, String message) throws Ex {
+    if (!givenConditionals.isCondition()) {
+      throw function.apply(message);
+    }
+    return thenFunction.apply(input);
+  }
   
 }

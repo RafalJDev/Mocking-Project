@@ -1,8 +1,14 @@
 package library.conditionals;
 
+import client.code.EnhancedExceptions;
+import client.code.TestHelper;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 
+import java.util.function.Function;
+
+import static library.conditionals.BaseConditionals.doNothing;
+import static library.conditionals.GivenConditionals.given;
 import static library.conditionals.WhenConditionals.when;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
@@ -260,10 +266,68 @@ public class WhenConditionalsTest {
   
   @Test(expectedExceptions = RuntimeException.class)
   public void whenFalse_thenRuntimeException() {
-    SomeClass customObject2 =
         when(() -> sthFalse())
             .thenReturn(SomeClass::new)
             .orElseThrowE(RuntimeException::new);
+  }
+  
+  @Test(expectedExceptions = CustomException.class)
+  public void whenFalse_elseWithoutMessage_thenException_() throws CustomException {
+    when(false)
+        .then(doNothing)
+        .orElseThrow(CustomException::new);
+  }
+  
+  public void whenTrue_elseWithoutMessage_thenDoNothing() throws CustomException {
+    when(true)
+        .then(doNothing)
+        .orElseThrow(CustomException::new);
+  }
+  
+  public void givenString_whenTrue_thenHasCodeFromString() throws CustomException {
+    Integer integer = given(getGreetings())
+        .when(() -> sthTrue())
+        .thenReturn(String::hashCode)
+        .orElseThrow(CustomException::new, "Exception message");
+    
+    Integer expected = getGreetings().hashCode();
+    assertEquals(integer, expected);
+  }
+  
+  @Test(expectedExceptions = CustomException.class, expectedExceptionsMessageRegExp = "Exception message")
+  public void givenString_whenFalse_thenCustomException() throws CustomException {
+    given(getGreetings())
+        .when(() -> sthFalse())
+        .thenReturn(String::hashCode)
+        .orElseThrow(CustomException::new, "Exception message");
+  }
+  
+  public void whenTrue_thenDoNothing() {
+    when(() -> sthTrue())
+        .then(doNothing)
+        .orElseThrow(OutOfMemoryError::new, "Exception message");
+  }
+  
+  @Test(expectedExceptions = OutOfMemoryError.class, expectedExceptionsMessageRegExp = "Exception message")
+  public void whenFalse_thenOutOfMemoryException() {
+    when(() -> sthFalse())
+        .then(doNothing)
+        .orElseThrow(OutOfMemoryError::new, "Exception message");
+  }
+  
+  @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "This was expected")
+  public void whenTrue_thenRuntimeException() {
+    when(() -> sthTrue())
+        .thenThrow(RuntimeException::new, "This was expected");
+  }
+  
+  public void whenFalse_thenNothing() {
+    when(() -> sthFalse())
+        .thenThrow(RuntimeException::new, "This was expected");
+  }
+  
+  private String getGreetings() {
+    return "Greetings";
   }
   
   private static int getLowNumber() {
@@ -305,6 +369,15 @@ public class WhenConditionalsTest {
     
     String getMessageForLowNumber() {
       return "I'm so low";
+    }
+  }
+  
+  static class CustomException extends Exception {
+    public CustomException() {
+    }
+    
+    public CustomException(String message) {
+      super(message);
     }
   }
 }

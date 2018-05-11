@@ -4,22 +4,24 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ElseReturn<GivenType, ThenType> {
+public class ElseAfterReturn<GivenType, ThenType> {
   
   private Supplier<GivenType> givenSupplier;
   private BooleanSupplier whenSupplier;
   private Supplier<ThenType> thenSupplier;
   
-  public ElseReturn(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Supplier<ThenType> thenSupplier) {
+  ElseAfterReturn(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Supplier<ThenType> thenSupplier) {
     this.givenSupplier = givenSupplier;
     this.whenSupplier = whenSupplier;
     this.thenSupplier = thenSupplier;
   }
   
-  public ElseReturn(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Function<GivenType, ThenType> thenFunction) {
-    this.givenSupplier = givenSupplier;
-    this.whenSupplier = whenSupplier;
-    this.thenSupplier = () -> thenFunction.apply(this.givenSupplier.get());
+  ElseAfterReturn(BooleanSupplier whenSupplier, Supplier<ThenType> thenSupplier) {
+    this(() -> null, whenSupplier, thenSupplier);
+  }
+  
+  ElseAfterReturn(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Function<GivenType, ThenType> thenFunction) {
+    this(givenSupplier, whenSupplier, () -> thenFunction.apply(givenSupplier.get()));
   }
   
   public ThenType orElse(ThenType input) {
@@ -44,23 +46,23 @@ public class ElseReturn<GivenType, ThenType> {
   }
   
   public <Ex extends Throwable> ThenType orElseThrowE(Ex exception) throws Ex {
-    if (!whenSupplier.getAsBoolean()) {
-      throw exception;
+    if (whenSupplier.getAsBoolean()) {
+      return thenSupplier.get();
     }
-    return thenSupplier.get();
+    throw exception;
   }
   
   public <Ex extends Throwable> ThenType orElseThrow(Supplier<Ex> exceptionSupplier) throws Ex {
-    if (!whenSupplier.getAsBoolean()) {
-      throw exceptionSupplier.get();
+    if (whenSupplier.getAsBoolean()) {
+      return thenSupplier.get();
     }
-    return thenSupplier.get();
+    throw exceptionSupplier.get();
   }
   
   public <Ex extends Throwable> ThenType orElseThrow(Function<String, Ex> exceptionFunction, String message) throws Ex {
-    if (!whenSupplier.getAsBoolean()) {
-      throw exceptionFunction.apply(message);
+    if (whenSupplier.getAsBoolean()) {
+      return thenSupplier.get();
     }
-    return thenSupplier.get();
+    throw exceptionFunction.apply(message);
   }
 }

@@ -9,8 +9,8 @@ public class Then<GivenType> {
   
   private Supplier<GivenType> givenSupplier;
   private BooleanSupplier whenSupplier;
-
-  public Then(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier) {
+  
+  Then(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier) {
     this.givenSupplier = givenSupplier;
     this.whenSupplier = whenSupplier;
   }
@@ -23,16 +23,28 @@ public class Then<GivenType> {
     return new Else<>(givenSupplier, whenSupplier, thenRunnable);
   }
   
-  public <ThenType> ElseReturn<GivenType, ThenType> thenReturn(ThenType input) {
-    return new ElseReturn<>(givenSupplier, whenSupplier, () -> input);
+  public <Ex extends Throwable> ElseAfterThrow<GivenType, Ex> thenThrow(Ex thenException) {
+    return new ElseAfterThrow<>(givenSupplier, whenSupplier, () -> thenException);
   }
   
-  public <ThenType> ElseReturn<GivenType, ThenType> thenReturn(Supplier<ThenType> thenSupplier) {
-    return new ElseReturn<>(givenSupplier, whenSupplier, thenSupplier);
+  public <Ex extends Throwable> ElseAfterThrow<GivenType, Ex> thenThrow(Supplier<Ex> thenSupplier) {
+    return new ElseAfterThrow<>(givenSupplier, whenSupplier, thenSupplier);
   }
   
-  public <ThenType> ElseReturn<GivenType, ThenType> thenReturn(Function<GivenType, ThenType> thenFunction) {
-    return new ElseReturn<>(givenSupplier, whenSupplier, thenFunction);
+  public <Ex extends Throwable> ElseAfterThrow<GivenType, Ex> thenThrow(Function<String, Ex> thenFunction, String message) {
+    return new ElseAfterThrow<>(givenSupplier, whenSupplier, () -> thenFunction.apply(message));
+  }
+  
+  public <ThenType> ElseAfterReturn<GivenType, ThenType> thenReturn(ThenType input) {
+    return new ElseAfterReturn<>(givenSupplier, whenSupplier, () -> input);
+  }
+  
+  public <ThenType> ElseAfterReturn<GivenType, ThenType> thenReturn(Supplier<ThenType> thenSupplier) {
+    return new ElseAfterReturn<>(givenSupplier, whenSupplier, thenSupplier);
+  }
+  
+  public <ThenType> ElseAfterReturn<GivenType, ThenType> thenReturn(Function<GivenType, ThenType> thenFunction) {
+    return new ElseAfterReturn<>(givenSupplier, whenSupplier, thenFunction);
   }
   
 }

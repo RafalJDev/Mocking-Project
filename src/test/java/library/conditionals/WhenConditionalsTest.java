@@ -3,7 +3,7 @@ package library.conditionals;
 import org.mockito.Mock;
 import org.testng.annotations.Test;
 
-import static library.mockitoByRJ.when.WhenStatic.*;
+import static library.mockitoByRJ.given.WhenStatic.*;
 
 import static library.conditionals.BaseConditionals.doNothing;
 import static org.mockito.Mockito.mock;
@@ -104,16 +104,16 @@ public class WhenConditionalsTest {
   }
   
   //TODO
-//  @Test
-//  public void orElseThrow_methodReferenceForTrue_newException() throws Throwable {
-//    runnable = mock(Runnable.class);
-//
-//    when(() -> sthTrue())
-//        .then(runnable)
-//        .orElseThrowE(new RuntimeException());
-//
-//    verify(runnable, times(0)).run();
-//  }
+  @Test
+  public void orElseThrow_methodReferenceForTrue_newException() throws Throwable {
+    runnable = mock(Runnable.class);
+  
+    when(() -> sthTrue())
+        .then(runnable)
+        .orElseThrowE(new RuntimeException());
+  
+    verify(runnable, times(1)).run();
+  }
   
   //TODO
   @Test
@@ -126,121 +126,121 @@ public class WhenConditionalsTest {
   
     verify(runnable, times(1)).run();
   }
-
-//  public void orElse_intReturn_whenTrue_methodReferenceAsParameter_() {
-//
-//    runnable = mock(Runnable.class);
-//
-//    int result1 = when(() -> sthTrue())
-//        .thenReturn(() -> getHighNumber())
-//        .orElse(() -> getLowNumber());
-//
-//    verify(runnable, times(0)).run();
-//
-//    assertEquals(result1, 1000);
-//  }
-//
-//  public void orElse_intReturn_whenFalse_methodReferenceAsParameter() {
-//
-//    runnable = mock(Runnable.class);
-//
-//    int result1 = when(() -> sthFalse())
-//        .thenReturn(() -> getHighNumber())
-//        .orElse(() -> getLowNumber());
-//
-//    verify(runnable, times(0)).run();
-//
-//    assertEquals(result1, 123);
-//  }
-//
-//  public void orElse_intReturn_whenTrue_valueAsParameter() {
-//
-//    runnable = mock(Runnable.class);
-//
-//    int result1 = when(() -> sthTrue())
-//        .thenReturn(() -> getHighNumber())
-//        .orElse(345);
-//
-//    verify(runnable, times(0)).run();
-//
-//    assertEquals(result1, 1000);
-//  }
-//
-//  public void orElse_intReturn_whenFalse_valueAsParameter() {
-//
-//    runnable = mock(Runnable.class);
-//
-//    int result1 = when(() -> sthFalse())
-//        .thenReturn(() -> getHighNumber())
-//        .orElse(345);
-//
-//    verify(runnable, times(0)).run();
-//
-//    assertEquals(result1, 345);
-//  }
-//
-//  public void orElseThrow_whenTrue_thenReturnedLowNumber() {
-//
-//    int result3 = when(() -> sthTrue())
-//        .thenReturn(() -> getLowNumber())
-//        .orElseThrowE(new RuntimeException());
-//
-//    assertEquals(result3, getLowNumber());
-//  }
-//
-//  @Test(expectedExceptions = RuntimeException.class)
-//  public void orElseThrow_whenFalse_thenExceptionAsMethodReference() {
-//
-//    int result4 = when(() -> sthFalse())
-//        .thenReturn(() -> getLowNumber())
-//        .orElseThrowE(RuntimeException::new);
-//  }
-//
-//  public void orElseThrow_whenTrue_thenExceptionAsMethodReference() {
-//
-//    int result4 = when(() -> sthTrue())
-//        .thenReturn(() -> getLowNumber())
-//        .orElseThrowE(RuntimeException::new);
-//
-//    assertEquals(result4, getLowNumber());
-//  }
-//
-//  @Test
-//  public void whenTrue_forString_addedGenericHandling_() {
-//    String string =
-//        when(() -> sthTrue())
-//            .thenReturn(getYay())
-//            .orElse(getNah());
-//
-//    assertEquals(string, getYay());
-//  }
-//
-//  @Test
-//  public void whenFalse_forString_addedGenericHandling_() {
-//    String string =
-//        when(() -> sthFalse())
-//            .thenReturn(getYay())
-//            .orElse(getNah());
-//
-//    assertEquals(string, getNah());
-//  }
-//
-//  @Test
-//  public void whenTrue_thenReturnSomeClass() {
-//    SomeClass customObject =
-//        when(() -> sthTrue())
-//            .thenReturn(new SomeClass())
-//            .orElse(SomeClass::new);
-//
-//    assertTrue(customObject instanceof SomeClass);
-//  }
-//
-//  @Test(expectedExceptions = RuntimeException.class)
-//  public void whenFalse_thenRuntimeException() {
-//    when(() -> sthFalse())
-//        .thenReturn(SomeClass::new)
-//        .orElseThrowE(RuntimeException::new);
-//  }
+  
+  public void orElse_intReturn_whenTrue_methodReferenceAsParameter_() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(() -> sthTrue())
+        .thenReturn(() -> getHighNumber())
+        .orElse(() -> getLowNumber());
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 1000);
+  }
+  
+  public void orElse_intReturn_whenFalse_methodReferenceAsParameter() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(() -> sthFalse())
+        .thenReturn(() -> getHighNumber())
+        .orElse(() -> getLowNumber());
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 123);
+  }
+  
+  public void orElse_intReturn_whenTrue_valueAsParameter() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(() -> sthTrue())
+        .thenReturn(() -> getHighNumber())
+        .orElse(345);
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 1000);
+  }
+  
+  public void orElse_intReturn_whenFalse_valueAsParameter() {
+    
+    runnable = mock(Runnable.class);
+    
+    int result1 = when(() -> sthFalse())
+        .thenReturn(() -> getHighNumber())
+        .orElse(345);
+    
+    verify(runnable, times(0)).run();
+    
+    assertEquals(result1, 345);
+  }
+  
+  public void orElseThrow_whenTrue_thenReturnedLowNumber() {
+    
+    int result3 = when(() -> sthTrue())
+        .thenReturn(() -> getLowNumber())
+        .orElseThrowE(new RuntimeException());
+    
+    assertEquals(result3, getLowNumber());
+  }
+  
+  @Test(expectedExceptions = RuntimeException.class)
+  public void orElseThrow_whenFalse_thenExceptionAsMethodReference() {
+    
+    int result4 = when(() -> sthFalse())
+        .thenReturn(() -> getLowNumber())
+        .orElseThrow(RuntimeException::new);
+  }
+  
+  public void orElseThrow_whenTrue_thenExceptionAsMethodReference() {
+    
+    int result4 = when(() -> sthTrue())
+        .thenReturn(() -> getLowNumber())
+        .orElseThrow(RuntimeException::new);
+    
+    assertEquals(result4, getLowNumber());
+  }
+  
+  @Test
+  public void whenTrue_forString_addedGenericHandling_() {
+    String string =
+        when(() -> sthTrue())
+            .thenReturn(getYay())
+            .orElse(getNah());
+    
+    assertEquals(string, getYay());
+  }
+  
+  @Test
+  public void whenFalse_forString_addedGenericHandling_() {
+    String string =
+        when(() -> sthFalse())
+            .thenReturn(getYay())
+            .orElse(getNah());
+    
+    assertEquals(string, getNah());
+  }
+  
+  @Test
+  public void whenTrue_thenReturnSomeClass() {
+    SomeClass customObject =
+        when(() -> sthTrue())
+            .thenReturn(new SomeClass())
+            .orElse(SomeClass::new);
+    
+    assertTrue(customObject instanceof SomeClass);
+  }
+  
+  @Test(expectedExceptions = RuntimeException.class)
+  public void whenFalse_thenRuntimeException() {
+    when(() -> sthFalse())
+        .thenReturn(SomeClass::new)
+        .orElseThrow(RuntimeException::new);
+  }
   
   @Test(expectedExceptions = CustomException.class)
   public void whenFalse_elseWithoutMessage_thenException_() throws Throwable {
@@ -250,35 +250,36 @@ public class WhenConditionalsTest {
   }
   
   //TODO
-//  public void whenTrue_elseWithoutMessage_thenDoNothing() throws Throwable {
-//    when(true)
-//        .then(doNothing)
-//        .orElseThrow(CustomException::new);
-//  }
-
-//  public void whenTrue_thenDoNothing() throws Throwable {
-//    when(() -> sthTrue())
-//        .then(doNothing)
-//        .orElseThrow(IllegalArgumentException::new, "Exception message");
-//  }
-//
-//  @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Exception message")
-//  public void whenFalse_thenOutOfMemoryException() throws Throwable{
-//    when(() -> sthFalse())
-//        .then(doNothing)
-//        .orElseThrow(IllegalArgumentException::new, "Exception message");
-//  }
-
-//  @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "This was expected")
-//  public void whenTrue_thenRuntimeException() {
-//    when(() -> sthTrue())
-//        .thenThrow(RuntimeException::new, "This was expected");
-//  }
-//
-//  public void whenFalse_thenNothing() {
-//    when(() -> sthFalse())
-//        .thenThrow(RuntimeException::new, "This was expected");
-//  }
+  public void whenTrue_elseWithoutMessage_thenDoNothing() throws Throwable {
+    when(true)
+        .then(doNothing)
+        .orElseThrow(CustomException::new);
+  }
+  
+  //TODO
+  public void whenTrue_thenDoNothing() throws Throwable {
+    when(() -> sthTrue())
+        .then(doNothing)
+        .orElseThrow(IllegalArgumentException::new, "Exception message");
+  }
+  
+  @Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Exception message")
+  public void whenFalse_thenOutOfMemoryException() throws Throwable {
+    when(() -> sthFalse())
+        .then(doNothing)
+        .orElseThrow(IllegalArgumentException::new, "Exception message");
+  }
+  
+  @Test
+  public void whenTrue_thenRuntimeException() {
+    when(() -> sthTrue())
+        .thenThrow(RuntimeException::new, "This was expected");
+  }
+  
+  public void whenFalse_thenNothing() {
+    when(() -> sthFalse())
+        .thenThrow(RuntimeException::new, "This was expected");
+  }
   
   private String getGreetings() {
     return "Greetings";

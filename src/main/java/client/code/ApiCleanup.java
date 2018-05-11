@@ -1,7 +1,7 @@
 package client.code;
 
 import static library.mockitoByRJ.given.Given.given;
-import static library.mockitoByRJ.when.WhenStatic.when;
+import static library.mockitoByRJ.given.WhenStatic.when;
 
 //Task 10
 public class ApiCleanup {

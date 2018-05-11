@@ -11,22 +11,18 @@ public class Else<GivenType> {
   private BooleanSupplier whenSupplier;
   private Consumer<GivenType> thenConsumer;
   
-  public Else(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Consumer<GivenType> thenConsumer) {
+  Else(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Consumer<GivenType> thenConsumer) {
     this.givenSupplier = givenSupplier;
     this.whenSupplier = whenSupplier;
     this.thenConsumer = thenConsumer;
   }
   
-  public Else(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Runnable thenRunnable) {
-    this.givenSupplier = givenSupplier;
-    this.whenSupplier = whenSupplier;
-    this.thenConsumer = givenType -> thenRunnable.run();
+  Else(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Runnable thenRunnable) {
+    this(givenSupplier, whenSupplier, givenType -> thenRunnable.run());
   }
   
-  public Else(BooleanSupplier whenSupplier, Runnable thenRunnable) {
-    this.givenSupplier = () -> null;
-    this.whenSupplier = whenSupplier;
-    this.thenConsumer = givenType -> thenRunnable.run();
+  Else(BooleanSupplier whenSupplier, Runnable thenRunnable) {
+    this(() -> null, whenSupplier, givenType -> thenRunnable.run());
   }
   
   public void orElse(Consumer<GivenType> elseConsumer) {
@@ -45,24 +41,27 @@ public class Else<GivenType> {
     runnable.run();
   }
   
-  public <Ex extends Throwable> void orElseThrow(Supplier<Ex> exceptionSupplier) throws Ex {
-    if (!whenSupplier.getAsBoolean()) {
-      throw exceptionSupplier.get();
+  public <Ex extends Throwable> void orElseThrowE(Ex exception) throws Ex {
+    if (whenSupplier.getAsBoolean()) {
+      thenConsumer.accept(givenSupplier.get());
+      return;
     }
-    thenConsumer.accept(givenSupplier.get());
+    throw exception;
   }
   
-  public <Ex extends Throwable> void orElseThrowE(Ex exception) throws Ex {
-    if (!whenSupplier.getAsBoolean()) {
-      throw exception;
+  public <Ex extends Throwable> void orElseThrow(Supplier<Ex> exceptionSupplier) throws Ex {
+    if (whenSupplier.getAsBoolean()) {
+      thenConsumer.accept(givenSupplier.get());
+      return;
     }
-    thenConsumer.accept(givenSupplier.get());
+    throw exceptionSupplier.get();
   }
   
   public <Ex extends Throwable> void orElseThrow(Function<String, Ex> function, String message) throws Ex {
-    if (!whenSupplier.getAsBoolean()) {
-      throw function.apply(message);
+    if (whenSupplier.getAsBoolean()) {
+      thenConsumer.accept(givenSupplier.get());
+      return;
     }
-    thenConsumer.accept(givenSupplier.get());
+    throw function.apply(message);
   }
 }

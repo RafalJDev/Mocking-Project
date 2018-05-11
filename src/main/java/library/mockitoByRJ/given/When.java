@@ -7,11 +7,11 @@ public class When<GivenType> {
   
   private Supplier<GivenType> givenSupplier;
   
-  public When(GivenType input) {
+  When(GivenType input) {
     this.givenSupplier = () -> input;
   }
   
-  public When(Supplier<GivenType> givenSupplier) {
+  When(Supplier<GivenType> givenSupplier) {
     this.givenSupplier = givenSupplier;
   }
   

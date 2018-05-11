@@ -23,8 +23,8 @@ public class Then<GivenType> {
     return new Else<>(givenSupplier, whenSupplier, thenRunnable);
   }
   
-  public <Ex extends Throwable> ElseAfterThrow<GivenType, Ex> thenThrow(Ex thenException) {
-    return new ElseAfterThrow<>(givenSupplier, whenSupplier, () -> thenException);
+  public <Ex extends Throwable> ElseAfterThrow<GivenType, Ex> thenThrowE(Ex thenException) {
+    return thenThrow(() -> thenException);
   }
   
   public <Ex extends Throwable> ElseAfterThrow<GivenType, Ex> thenThrow(Supplier<Ex> thenSupplier) {
@@ -36,7 +36,7 @@ public class Then<GivenType> {
   }
   
   public <ThenType> ElseAfterReturn<GivenType, ThenType> thenReturn(ThenType input) {
-    return new ElseAfterReturn<>(givenSupplier, whenSupplier, () -> input);
+    return thenReturn(() -> input);
   }
   
   public <ThenType> ElseAfterReturn<GivenType, ThenType> thenReturn(Supplier<ThenType> thenSupplier) {

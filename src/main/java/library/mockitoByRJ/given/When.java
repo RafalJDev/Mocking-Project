@@ -20,6 +20,6 @@ public class When<GivenType> {
   }
   
   public Then<GivenType> when(Boolean whenBoolean) {
-    return new Then<>(givenSupplier, () -> whenBoolean);
+    return when(() -> whenBoolean);
   }
 }

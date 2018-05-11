@@ -9,6 +9,6 @@ public class WhenStatic {
   }
   
   public static <EmptyType> ThenWhenStatic<EmptyType> when(Boolean whenBoolean) {
-    return new ThenWhenStatic(() -> whenBoolean);
+    return when(() -> whenBoolean);
   }
 }

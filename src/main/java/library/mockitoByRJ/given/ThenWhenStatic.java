@@ -16,24 +16,23 @@ public class ThenWhenStatic<EmptyType> {
     return new Else<>(whenSupplier, thenRunnable);
   }
   
-  public <Ex extends Throwable> ElseAfterThrow<EmptyType, Ex> thenThrow(Ex thenException) {
-    return new ElseAfterThrow<>(whenSupplier, () -> thenException);
-  }
-  
   public <Ex extends Throwable> ElseAfterThrow<EmptyType, Ex> thenThrow(Supplier<Ex> thenSupplier) {
     return new ElseAfterThrow<>(whenSupplier, thenSupplier);
   }
   
-  public <Ex extends Throwable> ElseAfterThrow<EmptyType, Ex> thenThrow(Function<String, Ex> thenFunction, String message) {
-    return new ElseAfterThrow<>(whenSupplier, () -> thenFunction.apply(message));
+  public <Ex extends Throwable> ElseAfterThrow<EmptyType, Ex> thenThrowE(Ex thenException) {
+    return thenThrow(() -> thenException);
   }
   
-  public <ThenType> ElseAfterReturn<EmptyType, ThenType> thenReturn(ThenType input) {
-    return new ElseAfterReturn<>(whenSupplier, () -> input);
+  public <Ex extends Throwable> ElseAfterThrow<EmptyType, Ex> thenThrow(Function<String, Ex> thenFunction, String message) {
+    return thenThrow(() -> thenFunction.apply(message));
   }
   
   public <ThenType> ElseAfterReturn<EmptyType, ThenType> thenReturn(Supplier<ThenType> thenSupplier) {
     return new ElseAfterReturn<>(whenSupplier, thenSupplier);
   }
   
+  public <ThenType> ElseAfterReturn<EmptyType, ThenType> thenReturn(ThenType input) {
+    return thenReturn(() -> input);
+  }
 }

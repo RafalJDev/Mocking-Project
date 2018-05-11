@@ -24,13 +24,6 @@ public class ElseAfterReturn<GivenType, ThenType> {
     this(givenSupplier, whenSupplier, () -> thenFunction.apply(givenSupplier.get()));
   }
   
-  public ThenType orElse(ThenType input) {
-    if (whenSupplier.getAsBoolean()) {
-      return thenSupplier.get();
-    }
-    return input;
-  }
-  
   public ThenType orElse(Supplier<ThenType> elseConsumer) {
     if (whenSupplier.getAsBoolean()) {
       return thenSupplier.get();
@@ -38,18 +31,12 @@ public class ElseAfterReturn<GivenType, ThenType> {
     return elseConsumer.get();
   }
   
-  public ThenType orElse(Function<GivenType, ThenType> elseFunction) {
-    if (whenSupplier.getAsBoolean()) {
-      return thenSupplier.get();
-    }
-    return elseFunction.apply(givenSupplier.get());
+  public ThenType orElse(ThenType input) {
+    return orElse(() -> input);
   }
   
-  public <Ex extends Throwable> ThenType orElseThrowE(Ex exception) throws Ex {
-    if (whenSupplier.getAsBoolean()) {
-      return thenSupplier.get();
-    }
-    throw exception;
+  public ThenType orElse(Function<GivenType, ThenType> elseFunction) {
+    return orElse(() -> elseFunction.apply(givenSupplier.get()));
   }
   
   public <Ex extends Throwable> ThenType orElseThrow(Supplier<Ex> exceptionSupplier) throws Ex {
@@ -59,10 +46,11 @@ public class ElseAfterReturn<GivenType, ThenType> {
     throw exceptionSupplier.get();
   }
   
+  public <Ex extends Throwable> ThenType orElseThrowE(Ex exception) throws Ex {
+    return orElseThrow(() -> exception);
+  }
+  
   public <Ex extends Throwable> ThenType orElseThrow(Function<String, Ex> exceptionFunction, String message) throws Ex {
-    if (whenSupplier.getAsBoolean()) {
-      return thenSupplier.get();
-    }
-    throw exceptionFunction.apply(message);
+    return orElseThrow(() -> exceptionFunction.apply(message));
   }
 }

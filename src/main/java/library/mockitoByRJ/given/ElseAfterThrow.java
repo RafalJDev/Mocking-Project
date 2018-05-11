@@ -35,13 +35,6 @@ public class ElseAfterThrow<GivenType, Ex extends Throwable> {
     runnable.run();
   }
   
-  public <Ex2 extends Throwable> void orElseThrowE(Ex2 elseException) throws Ex, Ex2 {
-    if (whenSupplier.getAsBoolean()) {
-      throw thenSupplier.get();
-    }
-    throw elseException;
-  }
-  
   public <Ex2 extends Throwable> void orElseThrow(Supplier<Ex2> elseExceptionSupplier) throws Ex, Ex2 {
     if (whenSupplier.getAsBoolean()) {
       throw thenSupplier.get();
@@ -49,10 +42,11 @@ public class ElseAfterThrow<GivenType, Ex extends Throwable> {
     throw elseExceptionSupplier.get();
   }
   
+  public <Ex2 extends Throwable> void orElseThrowE(Ex2 elseException) throws Ex, Ex2 {
+    orElseThrow(() -> elseException);
+  }
+  
   public <Ex2 extends Throwable> void orElseThrow(Function<String, Ex2> elseExceptionFunction, String message) throws Ex, Ex2 {
-    if (whenSupplier.getAsBoolean()) {
-      throw thenSupplier.get();
-    }
-    throw elseExceptionFunction.apply(message);
+    orElseThrow(() -> elseExceptionFunction.apply(message));
   }
 }

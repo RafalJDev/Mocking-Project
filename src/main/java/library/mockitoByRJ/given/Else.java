@@ -25,14 +25,6 @@ public class Else<GivenType> {
     this(() -> null, whenSupplier, givenType -> thenRunnable.run());
   }
   
-  public void orElse(Consumer<GivenType> elseConsumer) {
-    if (whenSupplier.getAsBoolean()) {
-      thenConsumer.accept(givenSupplier.get());
-      return;
-    }
-    elseConsumer.accept(givenSupplier.get());
-  }
-  
   public void orElse(Runnable runnable) {
     if (whenSupplier.getAsBoolean()) {
       thenConsumer.accept(givenSupplier.get());
@@ -41,12 +33,8 @@ public class Else<GivenType> {
     runnable.run();
   }
   
-  public <Ex extends Throwable> void orElseThrowE(Ex exception) throws Ex {
-    if (whenSupplier.getAsBoolean()) {
-      thenConsumer.accept(givenSupplier.get());
-      return;
-    }
-    throw exception;
+  public void orElse(Consumer<GivenType> elseConsumer) {
+    orElse(() -> elseConsumer.accept(givenSupplier.get()));
   }
   
   public <Ex extends Throwable> void orElseThrow(Supplier<Ex> exceptionSupplier) throws Ex {
@@ -57,11 +45,12 @@ public class Else<GivenType> {
     throw exceptionSupplier.get();
   }
   
+  public <Ex extends Throwable> void orElseThrowE(Ex exception) throws Ex {
+    orElseThrow(() -> exception);
+  }
+  
   public <Ex extends Throwable> void orElseThrow(Function<String, Ex> function, String message) throws Ex {
-    if (whenSupplier.getAsBoolean()) {
-      thenConsumer.accept(givenSupplier.get());
-      return;
-    }
-    throw function.apply(message);
+    orElseThrow(() -> function.apply(message));
+    
   }
 }

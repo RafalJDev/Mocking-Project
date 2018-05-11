@@ -24,13 +24,9 @@ public class Else<GivenType> {
   }
   
   public Else(BooleanSupplier whenSupplier, Runnable thenRunnable) {
+    this.givenSupplier = () -> null;
     this.whenSupplier = whenSupplier;
     this.thenConsumer = givenType -> thenRunnable.run();
-  }
-  
-  public Else(BooleanSupplier whenSupplier, Consumer<GivenType> thenConsumer) {
-    this.whenSupplier = whenSupplier;
-    this.thenConsumer = thenConsumer;
   }
   
   public void orElse(Consumer<GivenType> elseConsumer) {

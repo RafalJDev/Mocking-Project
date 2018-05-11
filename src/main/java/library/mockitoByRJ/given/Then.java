@@ -10,10 +10,6 @@ public class Then<GivenType> {
   private Supplier<GivenType> givenSupplier;
   private BooleanSupplier whenSupplier;
 
-//  public Then(BooleanSupplier whenSupplier) {
-//    this.whenSupplier = whenSupplier;
-//  }
-  
   public Then(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier) {
     this.givenSupplier = givenSupplier;
     this.whenSupplier = whenSupplier;
@@ -22,10 +18,10 @@ public class Then<GivenType> {
   public Else<GivenType> then(Consumer<GivenType> thenConsumer) {
     return new Else<>(givenSupplier, whenSupplier, thenConsumer);
   }
-
-//  public Else<GivenType> then(Runnable thenRunnable) {
-//    return new Else<>(givenSupplier, whenSupplier, thenRunnable);
-//  }
+  
+  public Else<GivenType> then(Runnable thenRunnable) {
+    return new Else<>(givenSupplier, whenSupplier, thenRunnable);
+  }
   
   public <ThenType> ElseReturn<GivenType, ThenType> thenReturn(ThenType input) {
     return new ElseReturn<>(givenSupplier, whenSupplier, () -> input);

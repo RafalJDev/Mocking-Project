@@ -1,7 +1,6 @@
 package library.conditionals;
 
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
 import static library.mockitoByRJ.when.WhenStatic.*;
@@ -42,21 +41,6 @@ public class WhenConditionalsTest {
     //TODO
   }
   
-  //TODO
-//  @Test
-//  public void when_true_thenVerifyTimes_withMockito() {
-//
-//    runnable = mock(Runnable.class);
-//    elseRunnable = mock(Runnable.class);
-//
-//    when(true)
-//        .then(runnable)
-//        .orElse(elseRunnable);
-//
-//    verify(runnable, times(1)).run();
-//    verify(elseRunnable, times(0)).run();
-//  }
-  
   @Test
   public void when_false_thenVerifyTimes_withMockito() {
     
@@ -69,25 +53,22 @@ public class WhenConditionalsTest {
     
     verify(runnable, times(0)).run();
     verify(elseRunnable, times(1)).run();
-  
-    Runnable doNothing = BaseConditionals.doNothing;
-    
-    assertNotNull(doNothing);
   }
   
   //TODO then for static when
-//  @Test
-//  public void check_doNothing_() {
-//
-//    runnable = mock(Runnable.class);
-//    elseRunnable = mock(Runnable.class);
-//
-//    when(true)
-//        .then(runnable)
-//        .orElse(elseRunnable);
-//
-//    verify(runnable, times(1)).run();
-//  }
+  @Test
+  public void check_doNothing_() {
+  
+    runnable = mock(Runnable.class);
+    elseRunnable = mock(Runnable.class);
+  
+    when(true)
+        .then(runnable)
+        .orElse(elseRunnable);
+  
+    verify(runnable, times(1)).run();
+    verify(elseRunnable, times(0)).run();
+  }
   
   @Test(expectedExceptions = RuntimeException.class)
   public void orElseThrow_boolean() throws Throwable {
@@ -135,16 +116,16 @@ public class WhenConditionalsTest {
 //  }
   
   //TODO
-//  @Test
-//  public void orElseThrow_methodReferenceForTrue_methodReferenceForException() throws Throwable {
-//    runnable = mock(Runnable.class);
-//
-//    when(() -> sthTrue())
-//        .then(runnable)
-//        .orElseThrow(RuntimeException::new);
-//
-//    verify(runnable, times(1)).run();
-//  }
+  @Test
+  public void orElseThrow_methodReferenceForTrue_methodReferenceForException() throws Throwable {
+    runnable = mock(Runnable.class);
+  
+    when(() -> sthTrue())
+        .then(runnable)
+        .orElseThrow(RuntimeException::new);
+  
+    verify(runnable, times(1)).run();
+  }
 
 //  public void orElse_intReturn_whenTrue_methodReferenceAsParameter_() {
 //

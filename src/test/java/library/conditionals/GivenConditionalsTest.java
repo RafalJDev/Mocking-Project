@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static com.sun.javaws.JnlpxArgs.verify;
 import static library.conditionals.GivenConditionals.doNothing;
 import static library.mockitoByRJ.given.Given.given;
 import static org.mockito.Mockito.mock;
@@ -294,4 +293,3 @@ public class GivenConditionalsTest {
     }
   }
 }
-

@@ -51,6 +51,5 @@ public class Else<GivenType> {
   
   public <Ex extends Throwable> void orElseThrow(Function<String, Ex> function, String message) throws Ex {
     orElseThrow(() -> function.apply(message));
-    
   }
 }

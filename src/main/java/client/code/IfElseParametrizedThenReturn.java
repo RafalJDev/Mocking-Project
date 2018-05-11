@@ -1,6 +1,6 @@
 package client.code;
 
-import static library.conditionals.GivenConditionals.*;
+import static library.conditionals.GivenConditionals.given;
 
 //Task 7
 public class IfElseParametrizedThenReturn {

@@ -1,7 +1,8 @@
 package client.code;
 
 import static library.conditionals.GivenConditionals.given;
-import static library.conditionals.WhenConditionals.*;
+import static library.conditionals.WhenConditionals.doNothing;
+import static library.conditionals.WhenConditionals.when;
 
 //Task 9
 public class EnhancedExceptions {

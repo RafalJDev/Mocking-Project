@@ -7,9 +7,9 @@ import java.util.function.Supplier;
 
 public class Else<GivenType> {
   
-  private Supplier<GivenType> givenSupplier;
-  private BooleanSupplier whenSupplier;
-  private Consumer<GivenType> thenConsumer;
+  private final Supplier<GivenType> givenSupplier;
+  private final BooleanSupplier whenSupplier;
+  private final Consumer<GivenType> thenConsumer;
   
   Else(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Consumer<GivenType> thenConsumer) {
     this.givenSupplier = givenSupplier;

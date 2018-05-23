@@ -6,9 +6,9 @@ import java.util.function.Supplier;
 
 public class ElseAfterReturn<GivenType, ThenType> {
   
-  private Supplier<GivenType> givenSupplier;
-  private BooleanSupplier whenSupplier;
-  private Supplier<ThenType> thenSupplier;
+  private final Supplier<GivenType> givenSupplier;
+  private final BooleanSupplier whenSupplier;
+  private final Supplier<ThenType> thenSupplier;
   
   ElseAfterReturn(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Supplier<ThenType> thenSupplier) {
     this.givenSupplier = givenSupplier;

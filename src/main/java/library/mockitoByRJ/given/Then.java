@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 
 public class Then<GivenType> {
   
-  private Supplier<GivenType> givenSupplier;
-  private BooleanSupplier whenSupplier;
+  private final Supplier<GivenType> givenSupplier;
+  private final BooleanSupplier whenSupplier;
   
   Then(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier) {
     this.givenSupplier = givenSupplier;

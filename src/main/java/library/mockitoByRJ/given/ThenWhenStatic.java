@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class ThenWhenStatic<EmptyType> {
   
-  private BooleanSupplier whenSupplier;
+  private final BooleanSupplier whenSupplier;
   
   ThenWhenStatic(BooleanSupplier whenSupplier) {
     this.whenSupplier = whenSupplier;

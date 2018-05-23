@@ -7,9 +7,9 @@ import java.util.function.Supplier;
 
 public class ElseAfterThrow<GivenType, Ex extends Throwable> {
   
-  private Supplier<GivenType> givenSupplier;
-  private BooleanSupplier whenSupplier;
-  private Supplier<Ex> thenSupplier;
+  private final Supplier<GivenType> givenSupplier;
+  private final BooleanSupplier whenSupplier;
+  private final Supplier<Ex> thenSupplier;
   
   ElseAfterThrow(Supplier<GivenType> givenSupplier, BooleanSupplier whenSupplier, Supplier<Ex> thenSupplier) {
     this.givenSupplier = givenSupplier;

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 public class When<GivenType> {
   
-  private Supplier<GivenType> givenSupplier;
+  private final Supplier<GivenType> givenSupplier;
   
   When(GivenType input) {
     this.givenSupplier = () -> input;
